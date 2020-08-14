@@ -114,4 +114,23 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new Error('Missing param: complement'))
   })
+
+  test('should return 400 if no neighborhood is provided', () => {
+    const sut = new SignUpController()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new Error('Missing param: neighborhood'))
+  })
 })
