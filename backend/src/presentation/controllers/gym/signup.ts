@@ -12,5 +12,11 @@ export class SignUpController {
         statusCode: 400
       }
     }
+    if (!httpRequest.body.zipCode) {
+      return {
+        body: new Error('Missing param: zipCode'),
+        statusCode: 400
+      }
+    }
   }
 }
