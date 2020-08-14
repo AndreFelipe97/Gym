@@ -42,5 +42,11 @@ export class SignUpController {
         statusCode: 400
       }
     }
+    if (!httpRequest.body.city) {
+      return {
+        body: new Error('Missing param: city'),
+        statusCode: 400
+      }
+    }
   }
 }
