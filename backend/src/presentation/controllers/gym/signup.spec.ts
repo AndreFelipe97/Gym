@@ -133,4 +133,23 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new Error('Missing param: neighborhood'))
   })
+
+  test('should return 400 if no city is provided', () => {
+    const sut = new SignUpController()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new Error('Missing param: city'))
+  })
 })
