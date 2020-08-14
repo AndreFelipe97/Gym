@@ -36,5 +36,11 @@ export class SignUpController {
         statusCode: 400
       }
     }
+    if (!httpRequest.body.neighborhood) {
+      return {
+        body: new Error('Missing param: neighborhood'),
+        statusCode: 400
+      }
+    }
   }
 }
