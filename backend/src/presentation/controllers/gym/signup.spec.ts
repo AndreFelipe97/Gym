@@ -1,12 +1,17 @@
 import { SignUpController } from './signup'
 import { MissingParamError } from '../../errors/missing-param-error'
 
+const makeSut = (): SignUpController => {
+  return new SignUpController()
+}
+
 describe('SignUp Controller', () => {
   test('should return 400 if no name is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
@@ -22,10 +27,11 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no phone is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
@@ -40,12 +46,33 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new MissingParamError('phone'))
   })
 
-  test('should return 400 if no zipCode is provided', () => {
-    const sut = new SignUpController()
+  test('should return 400 if no cnpj is provided', () => {
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('cnpj'))
+  })
+
+  test('should return 400 if no zipCode is provided', () => {
+    const sut = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        cnpj: 'any_cnpj',
         street: 'any_street',
         number: 'any_number',
         complement: 'any_complement',
@@ -60,11 +87,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no street is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         number: 'any_number',
         complement: 'any_complement',
@@ -79,11 +107,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no number is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         complement: 'any_complement',
@@ -98,11 +127,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no complement is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
@@ -117,11 +147,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no neighborhood is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
@@ -136,11 +167,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no city is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
@@ -155,11 +187,12 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 400 if no state is provided', () => {
-    const sut = new SignUpController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
         phone: 'any_phone',
+        cnpj: 'any_cnpj',
         zipCode: 'any_zip_code',
         street: 'any_street',
         number: 'any_number',
