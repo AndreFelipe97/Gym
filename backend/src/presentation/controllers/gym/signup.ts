@@ -24,5 +24,11 @@ export class SignUpController {
         statusCode: 400
       }
     }
+    if (!httpRequest.body.number) {
+      return {
+        body: new Error('Missing param: number'),
+        statusCode: 400
+      }
+    }
   }
 }
