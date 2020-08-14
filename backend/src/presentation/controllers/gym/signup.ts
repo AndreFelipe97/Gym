@@ -5,7 +5,7 @@ import { Controller } from '../../protocols/controller'
 
 export class SignUpController implements Controller {
   handle (httpRequest: HttpRequest): HttpResponse {
-    const requiredFields = ['name', 'phone', 'zipCode', 'street', 'number', 'complement', 'neighborhood', 'city', 'state']
+    const requiredFields = ['name', 'phone', 'cnpj', 'zipCode', 'street', 'number', 'complement', 'neighborhood', 'city', 'state']
 
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
