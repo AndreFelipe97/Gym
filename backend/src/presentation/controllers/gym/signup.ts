@@ -1,62 +1,36 @@
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param-error'
+import { badRequest } from '../../helpers/http-helper'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     if (!httpRequest.body.name) {
-      return {
-        body: new MissingParamError('name'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('name'))
     }
     if (!httpRequest.body.phone) {
-      return {
-        body: new MissingParamError('phone'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('phone'))
     }
     if (!httpRequest.body.zipCode) {
-      return {
-        body: new MissingParamError('zipCode'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('zipCode'))
     }
     if (!httpRequest.body.street) {
-      return {
-        body: new MissingParamError('street'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('street'))
     }
     if (!httpRequest.body.number) {
-      return {
-        body: new MissingParamError('number'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('number'))
     }
     if (!httpRequest.body.complement) {
-      return {
-        body: new MissingParamError('complement'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('complement'))
     }
     if (!httpRequest.body.neighborhood) {
-      return {
-        body: new MissingParamError('neighborhood'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('neighborhood'))
     }
     if (!httpRequest.body.city) {
-      return {
-        body: new MissingParamError('city'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('city'))
     }
 
     if (!httpRequest.body.state) {
-      return {
-        body: new MissingParamError('state'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('state'))
     }
   }
 }
