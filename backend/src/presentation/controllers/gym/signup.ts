@@ -18,5 +18,11 @@ export class SignUpController {
         statusCode: 400
       }
     }
+    if (!httpRequest.body.street) {
+      return {
+        body: new Error('Missing param: street'),
+        statusCode: 400
+      }
+    }
   }
 }
