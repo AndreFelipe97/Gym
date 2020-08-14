@@ -1,59 +1,60 @@
 import { HttpResponse, HttpRequest } from '../../protocols/http'
+import { MissingParamError } from '../../errors/missing-param-error'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     if (!httpRequest.body.name) {
       return {
-        body: new Error('Missing param: name'),
+        body: new MissingParamError('name'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.phone) {
       return {
-        body: new Error('Missing param: phone'),
+        body: new MissingParamError('phone'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.zipCode) {
       return {
-        body: new Error('Missing param: zipCode'),
+        body: new MissingParamError('zipCode'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.street) {
       return {
-        body: new Error('Missing param: street'),
+        body: new MissingParamError('street'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.number) {
       return {
-        body: new Error('Missing param: number'),
+        body: new MissingParamError('number'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.complement) {
       return {
-        body: new Error('Missing param: complement'),
+        body: new MissingParamError('complement'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.neighborhood) {
       return {
-        body: new Error('Missing param: neighborhood'),
+        body: new MissingParamError('neighborhood'),
         statusCode: 400
       }
     }
     if (!httpRequest.body.city) {
       return {
-        body: new Error('Missing param: city'),
+        body: new MissingParamError('city'),
         statusCode: 400
       }
     }
 
     if (!httpRequest.body.state) {
       return {
-        body: new Error('Missing param: state'),
+        body: new MissingParamError('state'),
         statusCode: 400
       }
     }
