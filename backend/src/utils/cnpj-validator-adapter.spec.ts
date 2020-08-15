@@ -30,4 +30,10 @@ describe('CnpjValidator Adapter', () => {
     const isValid = sut.isValid('')
     expect(isValid).toBe(false)
   })
+
+  test('should return true if it is longer than 14 digits', () => {
+    const sut = new CnpjValidatorAdapter()
+    const isValid = sut.isValid('298401910001810')
+    expect(isValid).toBe(false)
+  })
 })
