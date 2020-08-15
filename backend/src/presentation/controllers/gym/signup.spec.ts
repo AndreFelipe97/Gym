@@ -226,6 +226,27 @@ describe('SignUp Controller', () => {
 
   test('should return 400 if an invalid cnpj is provided', () => {
     const { sut, cnpjValidatorStub } = makeSut()
+    const isValidSpy = jest.spyOn(cnpjValidatorStub, 'isValid')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        cnpj: 'any_cnpj',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith('any_cnpj')
+  })
+
+  test('should call cnpjValidator with correct cnpj', () => {
+    const { sut, cnpjValidatorStub } = makeSut()
     jest.spyOn(cnpjValidatorStub, 'isValid').mockReturnValueOnce(false)
     const httpRequest = {
       body: {
