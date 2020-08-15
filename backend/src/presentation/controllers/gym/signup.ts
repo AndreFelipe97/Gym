@@ -25,7 +25,7 @@ export class SignUpController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('cnpj'))
       }
-      this.addGym.add({
+      const gym = this.addGym.add({
         name,
         phone,
         cnpj,
@@ -37,6 +37,10 @@ export class SignUpController implements Controller {
         city,
         state
       })
+      return {
+        statusCode: 200,
+        body: gym
+      }
     } catch (error) {
       return serverError()
     }
