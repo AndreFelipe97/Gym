@@ -350,4 +350,28 @@ describe('SignUp Controller', () => {
       state: 'any_state'
     })
   })
+
+  test('should return 500 if AddGym throws', () => {
+    const { sut, addGymStub } = makeSut()
+    jest.spyOn(addGymStub, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        cnpj: 'any_cnpj',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
 })
