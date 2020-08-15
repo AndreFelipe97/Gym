@@ -7,13 +7,26 @@ interface SutTypes {
   cnpjValidatorStub: CnpjValidator
 }
 
-const makeSut = (): SutTypes => {
+const makeCnpjValidator = (): CnpjValidator => {
   class CnpjValidatorStub implements CnpjValidator {
     isValid (cnpj: string): boolean {
       return true
     }
   }
-  const cnpjValidatorStub = new CnpjValidatorStub()
+  return new CnpjValidatorStub()
+}
+
+const makeCnpjValidatorWithError = (): CnpjValidator => {
+  class CnpjValidatorStub implements CnpjValidator {
+    isValid (cnpj: string): boolean {
+      throw new Error()
+    }
+  }
+  return new CnpjValidatorStub()
+}
+
+const makeSut = (): SutTypes => {
+  const cnpjValidatorStub = makeCnpjValidator()
   const sut = new SignUpController(cnpjValidatorStub)
 
   return {
@@ -267,12 +280,7 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 500 if CnpjValidator throws', () => {
-    class CnpjValidatorStub implements CnpjValidator {
-      isValid (cnpj: string): boolean {
-        throw new Error()
-      }
-    }
-    const cnpjValidatorStub = new CnpjValidatorStub()
+    const cnpjValidatorStub = makeCnpjValidatorWithError()
     const sut = new SignUpController(cnpjValidatorStub)
     const httpRequest = {
       body: {
