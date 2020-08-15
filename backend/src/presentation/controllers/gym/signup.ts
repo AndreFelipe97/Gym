@@ -1,6 +1,6 @@
 import { AddGym, Controller, CnpjValidator, HttpResponse, HttpRequest } from './signup-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
-import { badRequest, serverError } from '../../helpers/http-helper'
+import { badRequest, successRequest, serverError } from '../../helpers/http-helper'
 
 export class SignUpController implements Controller {
   private readonly cnpjValidator: CnpjValidator
@@ -37,10 +37,7 @@ export class SignUpController implements Controller {
         city,
         state
       })
-      return {
-        statusCode: 200,
-        body: gym
-      }
+      return successRequest(gym)
     } catch (error) {
       return serverError()
     }
