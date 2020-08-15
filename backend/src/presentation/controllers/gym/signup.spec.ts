@@ -1,6 +1,6 @@
 import { SignUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
-import { CnpjValidator } from '../../protocols/cnpj-validator'
+import { CnpjValidator } from '../../protocols'
 
 interface SutTypes {
   sut: SignUpController

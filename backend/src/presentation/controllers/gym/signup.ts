@@ -1,8 +1,6 @@
-import { HttpResponse, HttpRequest } from '../../protocols/http'
+import { Controller, CnpjValidator, HttpResponse, HttpRequest } from '../../protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
-import { Controller } from '../../protocols/controller'
-import { CnpjValidator } from '../../protocols/cnpj-validator'
 
 export class SignUpController implements Controller {
   private readonly cnpjValidator: CnpjValidator
