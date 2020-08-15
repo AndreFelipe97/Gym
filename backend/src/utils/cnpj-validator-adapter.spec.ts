@@ -24,4 +24,10 @@ describe('CnpjValidator Adapter', () => {
     const isValid = sut.isValid('29840191000180')
     expect(isValid).toBe(false)
   })
+
+  test('should return false if come empty', () => {
+    const sut = new CnpjValidatorAdapter()
+    const isValid = sut.isValid('')
+    expect(isValid).toBe(false)
+  })
 })
