@@ -1,6 +1,7 @@
 import { SignUpController } from './signup'
 import { MissingParamError } from '../../errors/missing-param-error'
 import { InvalidParamError } from '../../errors/invalid-param-error'
+import { ServerError } from '../../errors/server-error'
 import { CnpjValidator } from '../../protocols/cnpj-validator'
 
 interface SutTypes {
@@ -265,5 +266,32 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('cnpj'))
+  })
+
+  test('should return 500 if CnpjValidator throws', () => {
+    class CnpjValidatorStub implements CnpjValidator {
+      isValid (cnpj: string): boolean {
+        throw new Error()
+      }
+    }
+    const cnpjValidatorStub = new CnpjValidatorStub()
+    const sut = new SignUpController(cnpjValidatorStub)
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        cnpj: 'any_cnpj',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
