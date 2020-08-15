@@ -16,15 +16,6 @@ const makeCnpjValidator = (): CnpjValidator => {
   return new CnpjValidatorStub()
 }
 
-const makeCnpjValidatorWithError = (): CnpjValidator => {
-  class CnpjValidatorStub implements CnpjValidator {
-    isValid (cnpj: string): boolean {
-      throw new Error()
-    }
-  }
-  return new CnpjValidatorStub()
-}
-
 const makeSut = (): SutTypes => {
   const cnpjValidatorStub = makeCnpjValidator()
   const sut = new SignUpController(cnpjValidatorStub)
@@ -280,8 +271,10 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 500 if CnpjValidator throws', () => {
-    const cnpjValidatorStub = makeCnpjValidatorWithError()
-    const sut = new SignUpController(cnpjValidatorStub)
+    const { sut, cnpjValidatorStub } = makeSut()
+    jest.spyOn(cnpjValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
     const httpRequest = {
       body: {
         name: 'any_name',
