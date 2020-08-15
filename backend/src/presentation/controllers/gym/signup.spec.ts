@@ -13,7 +13,7 @@ const makeCnpjValidator = (): CnpjValidator => {
 
 const makeAddGym = (): AddGym => {
   class AddGymStub implements AddGym {
-    add (cnpj: AddGymModel): GymModel {
+    async add (cnpj: AddGymModel): Promise<GymModel> {
       const fakeGym = {
         id: 'valid_id',
         name: 'valid_name',
@@ -27,7 +27,7 @@ const makeAddGym = (): AddGym => {
         city: 'valid_city',
         state: 'valid_state'
       }
-      return fakeGym
+      return await new Promise(resolve => resolve(fakeGym))
     }
   }
   return new AddGymStub()
@@ -52,7 +52,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('SignUp Controller', () => {
-  test('should return 400 if no name is provided', () => {
+  test('should return 400 if no name is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -67,12 +67,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
 
-  test('should return 400 if no phone is provided', () => {
+  test('should return 400 if no phone is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -87,12 +87,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('phone'))
   })
 
-  test('should return 400 if no cnpj is provided', () => {
+  test('should return 400 if no cnpj is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -107,12 +107,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('cnpj'))
   })
 
-  test('should return 400 if no zipCode is provided', () => {
+  test('should return 400 if no zipCode is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -127,12 +127,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('zipCode'))
   })
 
-  test('should return 400 if no street is provided', () => {
+  test('should return 400 if no street is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -147,12 +147,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('street'))
   })
 
-  test('should return 400 if no number is provided', () => {
+  test('should return 400 if no number is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -167,12 +167,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('number'))
   })
 
-  test('should return 400 if no complement is provided', () => {
+  test('should return 400 if no complement is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -187,12 +187,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('complement'))
   })
 
-  test('should return 400 if no neighborhood is provided', () => {
+  test('should return 400 if no neighborhood is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -207,12 +207,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('neighborhood'))
   })
 
-  test('should return 400 if no city is provided', () => {
+  test('should return 400 if no city is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -227,12 +227,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('city'))
   })
 
-  test('should return 400 if no state is provided', () => {
+  test('should return 400 if no state is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -247,12 +247,12 @@ describe('SignUp Controller', () => {
         city: 'any_city'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('state'))
   })
 
-  test('should return 400 if an invalid cnpj is provided', () => {
+  test('should return 400 if an invalid cnpj is provided', async () => {
     const { sut, cnpjValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(cnpjValidatorStub, 'isValid')
     const httpRequest = {
@@ -269,11 +269,11 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    sut.handle(httpRequest)
+    await sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_cnpj')
   })
 
-  test('should call cnpjValidator with correct cnpj', () => {
+  test('should call cnpjValidator with correct cnpj', async () => {
     const { sut, cnpjValidatorStub } = makeSut()
     jest.spyOn(cnpjValidatorStub, 'isValid').mockReturnValueOnce(false)
     const httpRequest = {
@@ -290,12 +290,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('cnpj'))
   })
 
-  test('should return 500 if CnpjValidator throws', () => {
+  test('should return 500 if CnpjValidator throws', async () => {
     const { sut, cnpjValidatorStub } = makeSut()
     jest.spyOn(cnpjValidatorStub, 'isValid').mockImplementationOnce(() => {
       throw new Error()
@@ -314,12 +314,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
-  test('should call AddGym with correct values', () => {
+  test('should call AddGym with correct values', async () => {
     const { sut, addGymStub } = makeSut()
     const addSpy = jest.spyOn(addGymStub, 'add')
     const httpRequest = {
@@ -336,7 +336,7 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    sut.handle(httpRequest)
+    await sut.handle(httpRequest)
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
       phone: 'any_phone',
@@ -351,10 +351,10 @@ describe('SignUp Controller', () => {
     })
   })
 
-  test('should return 500 if AddGym throws', () => {
+  test('should return 500 if AddGym throws', async () => {
     const { sut, addGymStub } = makeSut()
-    jest.spyOn(addGymStub, 'add').mockImplementationOnce(() => {
-      throw new Error()
+    jest.spyOn(addGymStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
     })
     const httpRequest = {
       body: {
@@ -370,12 +370,12 @@ describe('SignUp Controller', () => {
         state: 'any_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
-  test('should return 200 if valid data is provided', () => {
+  test('should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -391,7 +391,7 @@ describe('SignUp Controller', () => {
         state: 'valid_state'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body).toEqual({
       id: 'valid_id',

@@ -11,7 +11,7 @@ export class SignUpController implements Controller {
     this.addGym = addGym
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = ['name', 'phone', 'cnpj', 'zipCode', 'street', 'number', 'complement', 'neighborhood', 'city', 'state']
 
@@ -25,7 +25,7 @@ export class SignUpController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('cnpj'))
       }
-      const gym = this.addGym.add({
+      const gym = await this.addGym.add({
         name,
         phone,
         cnpj,
