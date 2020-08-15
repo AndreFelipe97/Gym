@@ -1,9 +1,10 @@
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param-error'
+import { InvalidParamError } from '../../errors/invalid-param-error'
+import { ServerError } from '../../errors/server-error'
 import { badRequest } from '../../helpers/http-helper'
 import { Controller } from '../../protocols/controller'
 import { CnpjValidator } from '../../protocols/cnpj-validator'
-import { InvalidParamError } from '../../errors/invalid-param-error'
 
 export class SignUpController implements Controller {
   private readonly cnpjValidator: CnpjValidator
@@ -13,16 +14,23 @@ export class SignUpController implements Controller {
   }
 
   handle (httpRequest: HttpRequest): HttpResponse {
-    const requiredFields = ['name', 'phone', 'cnpj', 'zipCode', 'street', 'number', 'complement', 'neighborhood', 'city', 'state']
+    try {
+      const requiredFields = ['name', 'phone', 'cnpj', 'zipCode', 'street', 'number', 'complement', 'neighborhood', 'city', 'state']
 
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field))
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
       }
-    }
-    const isValid = this.cnpjValidator.isValid(httpRequest.body.cnpj)
-    if (!isValid) {
-      return badRequest(new InvalidParamError('cnpj'))
+      const isValid = this.cnpjValidator.isValid(httpRequest.body.cnpj)
+      if (!isValid) {
+        return badRequest(new InvalidParamError('cnpj'))
+      }
+    } catch (error) {
+      return {
+        body: new ServerError(),
+        statusCode: 500
+      }
     }
   }
 }
