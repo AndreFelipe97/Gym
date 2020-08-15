@@ -39,6 +39,7 @@ export class SignUpController implements Controller {
       })
       return successRequest(gym)
     } catch (error) {
+      console.error(error)
       return serverError()
     }
   }
