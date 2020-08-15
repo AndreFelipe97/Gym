@@ -18,7 +18,8 @@ export class SignUpController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
-      const isValid = this.cnpjValidator.isValid(httpRequest.body.cnpj)
+      const { cnpj } = httpRequest.body
+      const isValid = this.cnpjValidator.isValid(cnpj)
       if (!isValid) {
         return badRequest(new InvalidParamError('cnpj'))
       }
