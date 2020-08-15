@@ -1,11 +1,8 @@
 import { SignUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { CnpjValidator } from '../../protocols'
-
-interface SutTypes {
-  sut: SignUpController
-  cnpjValidatorStub: CnpjValidator
-}
+import { AddGym, AddGymModel } from '../../../domain/usecases/add-gym'
+import { GymModel } from '../../../domain/models/gym-model'
 
 const makeCnpjValidator = (): CnpjValidator => {
   class CnpjValidatorStub implements CnpjValidator {
@@ -16,13 +13,43 @@ const makeCnpjValidator = (): CnpjValidator => {
   return new CnpjValidatorStub()
 }
 
+const makeAddGym = (): AddGym => {
+  class AddGymStub implements AddGym {
+    add (cnpj: AddGymModel): GymModel {
+      const fakeGym = {
+        id: 'valid_id',
+        name: 'valid_name',
+        phone: 'valid_phone',
+        cnpj: 'valid_cnpj',
+        zipCode: 'valid_zip_code',
+        street: 'valid_street',
+        number: 'valid_number',
+        complement: 'valid_complement',
+        neighborhood: 'valid_neighborhood',
+        city: 'valid_city',
+        state: 'valid_state'
+      }
+      return fakeGym
+    }
+  }
+  return new AddGymStub()
+}
+
+interface SutTypes {
+  sut: SignUpController
+  cnpjValidatorStub: CnpjValidator
+  addGymStub: AddGym
+}
+
 const makeSut = (): SutTypes => {
   const cnpjValidatorStub = makeCnpjValidator()
-  const sut = new SignUpController(cnpjValidatorStub)
+  const addGymStub = makeAddGym()
+  const sut = new SignUpController(cnpjValidatorStub, addGymStub)
 
   return {
     sut,
-    cnpjValidatorStub
+    cnpjValidatorStub,
+    addGymStub
   }
 }
 
@@ -292,5 +319,37 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('should call AddGym with correct values', () => {
+    const { sut, addGymStub } = makeSut()
+    const addSpy = jest.spyOn(addGymStub, 'add')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        phone: 'any_phone',
+        cnpj: 'any_cnpj',
+        zipCode: 'any_zip_code',
+        street: 'any_street',
+        number: 'any_number',
+        complement: 'any_complement',
+        neighborhood: 'any_neighborhood',
+        city: 'any_city',
+        state: 'any_state'
+      }
+    }
+    sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      phone: 'any_phone',
+      cnpj: 'any_cnpj',
+      zipCode: 'any_zip_code',
+      street: 'any_street',
+      number: 'any_number',
+      complement: 'any_complement',
+      neighborhood: 'any_neighborhood',
+      city: 'any_city',
+      state: 'any_state'
+    })
   })
 })
