@@ -1,8 +1,6 @@
 import { SignUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
-import { CnpjValidator } from '../../protocols'
-import { AddGym, AddGymModel } from '../../../domain/usecases/add-gym'
-import { GymModel } from '../../../domain/models/gym-model'
+import { AddGym, AddGymModel, CnpjValidator, GymModel } from './signup-protocols'
 
 const makeCnpjValidator = (): CnpjValidator => {
   class CnpjValidatorStub implements CnpjValidator {

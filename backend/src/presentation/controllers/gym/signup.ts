@@ -1,7 +1,6 @@
-import { Controller, CnpjValidator, HttpResponse, HttpRequest } from '../../protocols'
+import { AddGym, Controller, CnpjValidator, HttpResponse, HttpRequest } from './signup-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
-import { AddGym } from '../../../domain/usecases/add-gym'
 
 export class SignUpController implements Controller {
   private readonly cnpjValidator: CnpjValidator
