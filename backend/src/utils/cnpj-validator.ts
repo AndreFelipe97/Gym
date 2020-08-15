@@ -39,7 +39,7 @@ export class CnpjValidatorAdapter implements CnpjValidator {
       soma += numeros.charAt(tamanho - i) * pos--
       if (pos < 2) { pos = 9 }
     }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
+    /* istanbul ignore next */ resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
     if (resultado !== Number(digitos.charAt(0))) {
       return false
     }
@@ -52,7 +52,7 @@ export class CnpjValidatorAdapter implements CnpjValidator {
       soma += numeros.charAt(tamanho - i) * pos--
       if (pos < 2) { pos = 9 }
     }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
+    /* istanbul ignore next */ resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
     if (resultado !== Number(digitos.charAt(1))) {
       return false
     }
