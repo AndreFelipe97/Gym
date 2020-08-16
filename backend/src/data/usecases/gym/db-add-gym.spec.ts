@@ -83,4 +83,34 @@ describe('DbAddGym Usecase', () => {
     const promise = sut.add(gymData)
     await expect(promise).rejects.toThrow()
   })
+
+  test('should return an Gym on success', async () => {
+    const { sut } = makeSut()
+    const gymData = {
+      name: 'valid_name',
+      phone: 'valid_phone',
+      cnpj: 'valid_cnpj',
+      zipCode: 'valid_zip_code',
+      street: 'valid_street',
+      number: 'valid_number',
+      complement: 'valid_complement',
+      neighborhood: 'valid_neighborhood',
+      city: 'valid_city',
+      state: 'valid_state'
+    }
+    const gym = await sut.add(gymData)
+    expect(gym).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      phone: 'valid_phone',
+      cnpj: 'valid_cnpj',
+      zipCode: 'valid_zip_code',
+      street: 'valid_street',
+      number: 'valid_number',
+      complement: 'valid_complement',
+      neighborhood: 'valid_neighborhood',
+      city: 'valid_city',
+      state: 'valid_state'
+    })
+  })
 })
