@@ -8,7 +8,6 @@ export class GymMongoRepository implements AddGymRepository {
     const gymCollection = MongoHelper.get_collection('gyms')
     const result = await gymCollection.insertOne(gymData)
     const gym = result.ops[0]
-    const { _id, ...gymWithoutId } = gym
-    return Object.assign({}, gymWithoutId, { id: _id })
+    return MongoHelper.map(gym)
   }
 }
