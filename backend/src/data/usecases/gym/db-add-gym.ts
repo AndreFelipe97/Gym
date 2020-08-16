@@ -8,7 +8,7 @@ export class DbAddGym implements AddGym {
   }
 
   async add (gymData: AddGymModel): Promise<GymModel> {
-    await this.addGymRepository.add(gymData)
-    return await new Promise(resolve => resolve(null))
+    const gym = await this.addGymRepository.add(gymData)
+    return gym
   }
 }
