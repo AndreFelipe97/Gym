@@ -6,6 +6,11 @@ describe('Gym Mongo Repository', () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
 
+  beforeEach(async () => {
+    const gymCollection = MongoHelper.get_collection('gyms')
+    await gymCollection.deleteMany({})
+  })
+
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
