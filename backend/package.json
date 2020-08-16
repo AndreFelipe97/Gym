@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.2",
     "@types/jest": "^26.0.9",
+    "@types/mongodb": "^3.5.26",
     "@types/node": "^14.0.27",
     "@typescript-eslint/eslint-plugin": "3",
     "eslint": "7",
@@ -27,5 +29,8 @@
     "test:integration": "yarn test -- --watch -c jest-integration-config.js",
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage"
+  },
+  "dependencies": {
+    "mongodb": "^3.6.0"
   }
 }
