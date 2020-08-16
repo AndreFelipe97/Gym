@@ -64,4 +64,23 @@ describe('DbAddGym Usecase', () => {
       state: 'valid_state'
     })
   })
+
+  test('should throw if AddGymRepository throws', async () => {
+    const { sut, addGymRepositoryStub } = makeSut()
+    jest.spyOn(addGymRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const gymData = {
+      name: 'valid_name',
+      phone: 'valid_phone',
+      cnpj: 'valid_cnpj',
+      zipCode: 'valid_zip_code',
+      street: 'valid_street',
+      number: 'valid_number',
+      complement: 'valid_complement',
+      neighborhood: 'valid_neighborhood',
+      city: 'valid_city',
+      state: 'valid_state'
+    }
+    const promise = sut.add(gymData)
+    await expect(promise).rejects.toThrow()
+  })
 })
