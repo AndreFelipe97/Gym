@@ -10,8 +10,12 @@ describe('Gym Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
+  const makeSut = (): GymMongoRepository => {
+    return new GymMongoRepository()
+  }
+
   test('should return an gym on success', async () => {
-    const sut = new GymMongoRepository()
+    const sut = makeSut()
     const gym = await sut.add({
       name: 'any_name',
       phone: 'any_phone',
