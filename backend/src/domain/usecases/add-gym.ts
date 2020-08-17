@@ -14,5 +14,5 @@ export interface AddGymModel {
 }
 
 export interface AddGym {
-  add: (cnpj: AddGymModel) => Promise<GymModel>
+  add: (gym: AddGymModel) => Promise<GymModel>
 }
