@@ -159,4 +159,22 @@ describe('SiguUp Controller User', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
+
+  test('should call EmailValidator with correct email', async () => {
+    const { sut, emailValidatorStub } = makeSut()
+    const emailValidator = jest.spyOn(emailValidatorStub, 'isValid')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        registration: 'any_registration',
+        passwordHash: 'any_passwordHash',
+        coach: 'any_coach',
+        admin: 'any_admin',
+        gym: 'any_gym'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(emailValidator).toHaveBeenCalledWith('any_email')
+  })
 })
