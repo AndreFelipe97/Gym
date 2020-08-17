@@ -1,5 +1,4 @@
 import { MongoClient, Collection } from 'mongodb'
-import { GymModel } from '../../../../domain/models/gym-model'
 
 export const MongoHelper = {
   client: null as MongoClient,
@@ -19,8 +18,8 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map: (collection: any): GymModel => {
-    const { _id, ...gymWithoutId } = collection
-    return Object.assign({}, gymWithoutId, { id: _id })
+  map: (collection: any): any => {
+    const { _id, ...collectionWithoutId } = collection
+    return Object.assign({}, collectionWithoutId, { id: _id })
   }
 }
