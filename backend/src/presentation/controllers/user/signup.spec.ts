@@ -52,4 +52,21 @@ describe('SiguUp Controller User', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('registration'))
   })
+
+  test('should return 400 if no passwordHash is provided', () => {
+    const sut = new SignUpUserController()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        registration: 'any_registration',
+        coach: 'any_coach',
+        admin: 'any_admin',
+        gym: 'any_gym'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordHash'))
+  })
 })
