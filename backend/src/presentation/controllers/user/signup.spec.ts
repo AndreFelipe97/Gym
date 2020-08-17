@@ -1,9 +1,13 @@
 import { SignUpUserController } from './signup'
 import { MissingParamError } from '../../errors'
 
+const makeSut = (): SignUpUserController => {
+  return new SignUpUserController()
+}
+
 describe('SiguUp Controller User', () => {
   test('should return 400 if no name is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email',
@@ -20,7 +24,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no email is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -37,7 +41,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no registration is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -54,7 +58,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no passwordHash is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -71,7 +75,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no coach is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -88,7 +92,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no admin is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -105,7 +109,7 @@ describe('SiguUp Controller User', () => {
   })
 
   test('should return 400 if no gym is provided', async () => {
-    const sut = new SignUpUserController()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
