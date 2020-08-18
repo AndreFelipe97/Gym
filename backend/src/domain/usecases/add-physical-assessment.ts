@@ -15,7 +15,7 @@ export interface AddPhysicalAssessmentModel {
   leftThigh: number
   rightCalf: number
   leftCalf: number
-  date: Date
+  date: string
   responsible: string
 }
 
