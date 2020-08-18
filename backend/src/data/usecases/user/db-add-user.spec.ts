@@ -41,4 +41,20 @@ describe('DbAddUser Usecase', () => {
     await sut.add(userData)
     expect(encryptSpy).toHaveBeenCalledWith('any_passwordHash')
   })
+
+  test('should throw if AddGymRepository throws', async () => {
+    const { sut, encrypterStub } = makeSut()
+    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const userData = {
+      name: 'any_name',
+      email: 'any_email',
+      registration: 'any_registration',
+      passwordHash: 'any_passwordHash',
+      coach: 'any_coach',
+      admin: 'any_admin',
+      gym: 'any_gym'
+    }
+    const promise = sut.add(userData)
+    await expect(promise).rejects.toThrow()
+  })
 })
