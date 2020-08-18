@@ -217,4 +217,30 @@ describe('Singup Controller PhysicalAssessment', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('chest'))
   })
+
+  test('should return 400 if no waist is provided ', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        user: 'any_user',
+        weight: 'any_weight',
+        height: 'any_height',
+        rightBiceps: 'any_rightBiceps',
+        leftBiceps: 'any_leftBiceps',
+        rightForearm: 'any_rightForearm',
+        leftForearm: 'any_leftForearm',
+        chest: 'any_chest',
+        abdomen: 'any_abdomen',
+        rightThigh: 'any_rightThigh',
+        leftThigh: 'any_leftThigh',
+        rightCalf: 'any_rightCalf',
+        leftCalf: 'any_leftCalf',
+        date: 'any_date',
+        responsible: 'any_responsible'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('waist'))
+  })
 })
