@@ -1,5 +1,5 @@
 import { SignUpPhysicalAssessmentController } from './signup'
-import { MissingParamError } from '../../errors'
+import { MissingParamError, ServerError } from '../../errors'
 import { AddPhysicalAssessment, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './signup-protocols'
 
 const makeAddPhysicalAssessment = (): AddPhysicalAssessment => {
@@ -500,5 +500,35 @@ describe('Singup Controller PhysicalAssessment', () => {
       date: '2020-08-18',
       responsible: 'valid_responsible'
     })
+  })
+
+  test('should return 500 if AddPhysicalAssessment throws', async () => {
+    const { sut, addPhysicalAssessmentStub } = makeSut()
+    jest.spyOn(addPhysicalAssessmentStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpRequest = {
+      body: {
+        user: 'valid_user',
+        weight: 2,
+        height: 2,
+        rightBiceps: 2,
+        leftBiceps: 2,
+        rightForearm: 2,
+        leftForearm: 2,
+        chest: 2,
+        waist: 2,
+        abdomen: 2,
+        rightThigh: 2,
+        leftThigh: 2,
+        rightCalf: 2,
+        leftCalf: 2,
+        date: '2020-08-18',
+        responsible: 'valid_responsible'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
