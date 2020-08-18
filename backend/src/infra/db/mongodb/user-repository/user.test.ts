@@ -15,8 +15,12 @@ describe('User Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
+  const makeSut = (): UserMongoRepository => {
+    return new UserMongoRepository()
+  }
+
   test('should return an gym on success ', async () => {
-    const sut = new UserMongoRepository()
+    const sut = makeSut()
     const user = await sut.add({
       name: 'any_name',
       email: 'any_email',
