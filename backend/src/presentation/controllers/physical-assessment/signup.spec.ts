@@ -1,5 +1,5 @@
 import { SignUpPhysicalAssessmentController } from './signup'
-import { MissingParamError } from '../../errors/missing-param-error'
+import { MissingParamError } from '../../errors'
 interface SutTypes {
   sut: SignUpPhysicalAssessmentController
 }
