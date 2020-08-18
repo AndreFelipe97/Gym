@@ -531,4 +531,49 @@ describe('Singup Controller PhysicalAssessment', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
+
+  test('should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        user: 'valid_user',
+        weight: 2,
+        height: 2,
+        rightBiceps: 2,
+        leftBiceps: 2,
+        rightForearm: 2,
+        leftForearm: 2,
+        chest: 2,
+        waist: 2,
+        abdomen: 2,
+        rightThigh: 2,
+        leftThigh: 2,
+        rightCalf: 2,
+        leftCalf: 2,
+        date: '2020-08-18',
+        responsible: 'valid_responsible'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: 'valid_id',
+      user: 'valid_user',
+      weight: 2,
+      height: 2,
+      rightBiceps: 2,
+      leftBiceps: 2,
+      rightForearm: 2,
+      leftForearm: 2,
+      chest: 2,
+      waist: 2,
+      abdomen: 2,
+      rightThigh: 2,
+      leftThigh: 2,
+      rightCalf: 2,
+      leftCalf: 2,
+      date: '2020-08-18',
+      responsible: 'valid_responsible'
+    })
+  })
 })
