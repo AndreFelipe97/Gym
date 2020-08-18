@@ -1,12 +1,44 @@
 import { SignUpPhysicalAssessmentController } from './signup'
 import { MissingParamError } from '../../errors'
+import { AddPhysicalAssessment, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './signup-protocols'
+
+const makeAddPhysicalAssessment = (): AddPhysicalAssessment => {
+  class AddUserStub implements AddPhysicalAssessment {
+    async add (user: AddPhysicalAssessmentModel): Promise<PhysicalAssessmentModel> {
+      const fakePhysicalAssessment = {
+        id: 'valid_id',
+        user: 'valid_user',
+        weight: 2,
+        height: 2,
+        rightBiceps: 2,
+        leftBiceps: 2,
+        rightForearm: 2,
+        leftForearm: 2,
+        chest: 2,
+        waist: 2,
+        abdomen: 2,
+        rightThigh: 2,
+        leftThigh: 2,
+        rightCalf: 2,
+        leftCalf: 2,
+        date: '2020-08-18',
+        responsible: 'valid_responsible'
+      }
+      return await new Promise(resolve => resolve(fakePhysicalAssessment))
+    }
+  }
+  return new AddUserStub()
+}
+
 interface SutTypes {
+  addPhysicalAssessmentStub: AddPhysicalAssessment
   sut: SignUpPhysicalAssessmentController
 }
 const makeSut = (): SutTypes => {
-  const sut = new SignUpPhysicalAssessmentController()
+  const addPhysicalAssessmentStub = makeAddPhysicalAssessment()
+  const sut = new SignUpPhysicalAssessmentController(addPhysicalAssessmentStub)
 
-  return { sut }
+  return { sut, addPhysicalAssessmentStub }
 }
 
 describe('Singup Controller PhysicalAssessment', () => {
@@ -424,5 +456,49 @@ describe('Singup Controller PhysicalAssessment', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('responsible'))
+  })
+
+  test('should call add PhysicalAssessment with correct values', async () => {
+    const { sut, addPhysicalAssessmentStub } = makeSut()
+    const addSpy = jest.spyOn(addPhysicalAssessmentStub, 'add')
+    const httpRequest = {
+      body: {
+        user: 'valid_user',
+        weight: 2,
+        height: 2,
+        rightBiceps: 2,
+        leftBiceps: 2,
+        rightForearm: 2,
+        leftForearm: 2,
+        chest: 2,
+        waist: 2,
+        abdomen: 2,
+        rightThigh: 2,
+        leftThigh: 2,
+        rightCalf: 2,
+        leftCalf: 2,
+        date: '2020-08-18',
+        responsible: 'valid_responsible'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      user: 'valid_user',
+      weight: 2,
+      height: 2,
+      rightBiceps: 2,
+      leftBiceps: 2,
+      rightForearm: 2,
+      leftForearm: 2,
+      chest: 2,
+      waist: 2,
+      abdomen: 2,
+      rightThigh: 2,
+      leftThigh: 2,
+      rightCalf: 2,
+      leftCalf: 2,
+      date: '2020-08-18',
+      responsible: 'valid_responsible'
+    })
   })
 })
