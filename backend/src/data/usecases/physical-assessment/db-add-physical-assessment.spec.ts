@@ -1,7 +1,5 @@
 import { DbAddPhysicalAssessment } from './db-add-physical-assessment'
-import { AddPhysicalAssessmentRepository } from '../../protocols/add-physical-assessment'
-import { AddPhysicalAssessmentModel } from '../../../domain/usecases/add-physical-assessment'
-import { PhysicalAssessmentModel } from '../../../domain/models/physical-assessment'
+import { AddPhysicalAssessmentRepository, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './db-add-physical-assessment-protocols'
 
 const makeAddUserRepository = (): AddPhysicalAssessmentRepository => {
   class AddPhysicalAssessmentRepositoryStub implements AddPhysicalAssessmentRepository {
