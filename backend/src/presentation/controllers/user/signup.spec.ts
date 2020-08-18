@@ -1,6 +1,7 @@
 import { SignUpUserController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { EmailValidator } from '../../protocols/email-validator'
+import { AddUser, AddUserModel, UserModel } from './signup-protocols'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -11,17 +12,39 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
+const makeAddUser = (): AddUser => {
+  class AddUserStub implements AddUser {
+    async add (user: AddUserModel): Promise<UserModel> {
+      const fakeUser = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email',
+        registration: 'valid_registration',
+        passwordHash: 'valid_passwordHash',
+        coach: 'valid_coach',
+        admin: 'valid_admin',
+        gym: 'valid_gym'
+      }
+      return await new Promise(resolve => resolve(fakeUser))
+    }
+  }
+  return new AddUserStub()
+}
+
 interface SutTypes {
   sut: SignUpUserController
   emailValidatorStub: EmailValidator
+  addUserStub: AddUser
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
-  const sut = new SignUpUserController(emailValidatorStub)
+  const addUserStub = makeAddUser()
+  const sut = new SignUpUserController(emailValidatorStub, addUserStub)
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    addUserStub
   }
 }
 
@@ -201,5 +224,31 @@ describe('SiguUp Controller User', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('should call add User with correct values', async () => {
+    const { sut, addUserStub } = makeSut()
+    const addSpy = jest.spyOn(addUserStub, 'add')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        registration: 'any_registration',
+        passwordHash: 'any_passwordHash',
+        coach: 'any_coach',
+        admin: 'any_admin',
+        gym: 'any_gym'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      email: 'any_email',
+      registration: 'any_registration',
+      passwordHash: 'any_passwordHash',
+      coach: 'any_coach',
+      admin: 'any_admin',
+      gym: 'any_gym'
+    })
   })
 })
