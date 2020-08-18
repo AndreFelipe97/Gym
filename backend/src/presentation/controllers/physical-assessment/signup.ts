@@ -42,7 +42,6 @@ export class SignUpPhysicalAssessmentController implements Controller {
         date,
         responsible
       })
-      console.log(physicalAssessment)
       return successRequest(physicalAssessment)
     } catch (error) {
       return serverError()
