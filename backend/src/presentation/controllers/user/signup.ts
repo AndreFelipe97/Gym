@@ -1,6 +1,6 @@
 import { AddUser, Controller, EmailValidator, HttpRequest, HttpResponse } from './signup-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
-import { badRequest, serverError } from '../../helpers/http-helper'
+import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
 
 export class SignUpUserController implements Controller {
   private readonly emailValidator: EmailValidator
@@ -25,7 +25,7 @@ export class SignUpUserController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('email'))
       }
-      await this.addUser.add({
+      const user = await this.addUser.add({
         name,
         email,
         registration,
@@ -34,6 +34,7 @@ export class SignUpUserController implements Controller {
         admin,
         gym
       })
+      return successRequest(user)
     } catch (error) {
       return serverError()
     }
