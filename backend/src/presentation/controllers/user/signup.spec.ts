@@ -251,4 +251,25 @@ describe('SiguUp Controller User', () => {
       gym: 'any_gym'
     })
   })
+
+  test('should return 500 if AddUser throws', async () => {
+    const { sut, addUserStub } = makeSut()
+    jest.spyOn(addUserStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        registration: 'any_registration',
+        passwordHash: 'any_passwordHash',
+        coach: 'any_coach',
+        admin: 'any_admin',
+        gym: 'any_gym'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
 })
