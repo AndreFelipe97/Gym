@@ -46,7 +46,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddPhysicalAssessment Usecase', () => {
-  test('should call AddUserRepository with correct values', async () => {
+  test('should call AddPhysicalAssessmentRepository with correct values', async () => {
     const { sut, addPhysicalAssessmentRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addPhysicalAssessmentRepositoryStub, 'add')
     const physicalAssessmentRepositoryData = {
@@ -86,5 +86,30 @@ describe('DbAddPhysicalAssessment Usecase', () => {
       date: '2020-08-18',
       responsible: 'valid_responsible'
     })
+  })
+
+  test('should throw if AddPhysicalAssessmentRepository throws', async () => {
+    const { sut, addPhysicalAssessmentRepositoryStub } = makeSut()
+    jest.spyOn(addPhysicalAssessmentRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const physicalAssessmentData = {
+      user: 'valid_user',
+      weight: 2,
+      height: 2,
+      rightBiceps: 2,
+      leftBiceps: 2,
+      rightForearm: 2,
+      leftForearm: 2,
+      chest: 2,
+      waist: 2,
+      abdomen: 2,
+      rightThigh: 2,
+      leftThigh: 2,
+      rightCalf: 2,
+      leftCalf: 2,
+      date: '2020-08-18',
+      responsible: 'valid_responsible'
+    }
+    const promise = sut.add(physicalAssessmentData)
+    await expect(promise).rejects.toThrow()
   })
 })
