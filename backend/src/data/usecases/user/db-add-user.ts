@@ -1,14 +1,17 @@
-import { AddUser, AddUserModel, Encrypter, UserModel } from './db-add-user-protocols'
+import { AddUser, AddUserModel, AddUserRepository, Encrypter, UserModel } from './db-add-user-protocols'
 
 export class DbAddUser implements AddUser {
   private readonly encrypter: Encrypter
+  private readonly addUserRepository: AddUserRepository
 
-  constructor (encrypter: Encrypter) {
+  constructor (encrypter: Encrypter, addUserRepository: AddUserRepository) {
     this.encrypter = encrypter
+    this.addUserRepository = addUserRepository
   }
 
   async add (userData: AddUserModel): Promise<UserModel> {
-    await this.encrypter.encrypt(userData.passwordHash)
+    const hashedPassword = await this.encrypter.encrypt(userData.passwordHash)
+    await this.addUserRepository.add(Object.assign({}, userData, { passwordHash: hashedPassword }))
     return await new Promise(resolve => resolve(null))
   }
 }
