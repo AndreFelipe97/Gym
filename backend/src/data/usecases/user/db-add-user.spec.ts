@@ -103,4 +103,20 @@ describe('DbAddUser Usecase', () => {
       gym: 'any_gym'
     })
   })
+
+  test('should throw if AddUserRepository throws', async () => {
+    const { sut, addUserRepositoryStub } = makeSut()
+    jest.spyOn(addUserRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const userData = {
+      name: 'any_name',
+      email: 'any_email',
+      registration: 'any_registration',
+      passwordHash: 'any_passwordHash',
+      coach: 'any_coach',
+      admin: 'any_admin',
+      gym: 'any_gym'
+    }
+    const promise = sut.add(userData)
+    await expect(promise).rejects.toThrow()
+  })
 })
