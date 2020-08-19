@@ -1,14 +1,35 @@
 import { SignUpExerciseSheetController } from './signup'
+import { AddExerciseSheet, AddExerciseSheetModel, ExerciseSheetModel } from './signup-protocols'
 import { MissingParamError } from '../../errors'
+
+const makeAddExerciseSheet = (): AddExerciseSheet => {
+  class AddExerciseSheetStub implements AddExerciseSheet {
+    async add (exerciseSheet: AddExerciseSheetModel): Promise<ExerciseSheetModel> {
+      const fakeExerciseSheet = {
+        id: 'valid_id',
+        user: 'valid_user',
+        exercise: 'any_exercise',
+        repetition: 'any_repetition',
+        amount: 'any_amount',
+        day: 'any_day',
+        responsible: 'any_responsible'
+      }
+      return await new Promise(resolve => resolve(fakeExerciseSheet))
+    }
+  }
+  return new AddExerciseSheetStub()
+}
 
 interface SutTypes {
   sut: SignUpExerciseSheetController
+  addExerciseSheetStub: AddExerciseSheet
 }
 
 const makeSut = (): SutTypes => {
-  const sut = new SignUpExerciseSheetController()
+  const addExerciseSheetStub = makeAddExerciseSheet()
+  const sut = new SignUpExerciseSheetController(addExerciseSheetStub)
 
-  return { sut }
+  return { sut, addExerciseSheetStub }
 }
 
 describe('Signup Exercise Sheet Controller', () => {
@@ -106,5 +127,29 @@ describe('Signup Exercise Sheet Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('responsible'))
+  })
+
+  test('should call AddExerciseSheet with correct values', async () => {
+    const { sut, addExerciseSheetStub } = makeSut()
+    const addSpy = jest.spyOn(addExerciseSheetStub, 'add')
+    const httpRequest = {
+      body: {
+        user: 'valid_user',
+        exercise: 'any_exercise',
+        repetition: 'any_repetition',
+        amount: 'any_amount',
+        day: 'any_day',
+        responsible: 'any_responsible'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      user: 'valid_user',
+      exercise: 'any_exercise',
+      repetition: 'any_repetition',
+      amount: 'any_amount',
+      day: 'any_day',
+      responsible: 'any_responsible'
+    })
   })
 })
