@@ -75,4 +75,20 @@ describe('Signup Exercise Sheet Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('amount'))
   })
+
+  test('should return 400 if no day is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        user: 'any_user',
+        exercise: 'any_exercise',
+        repetition: 'any_repetition',
+        amount: 'any_amount',
+        responsible: 'any_responsible'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('day'))
+  })
 })
