@@ -1,6 +1,6 @@
 import { AddMuscleGroup, Controller, HttpRequest, HttpResponse } from './signup-protocols'
 import { MissingParamError } from '../../errors'
-import { badRequest, serverError } from '../../helpers/http-helper'
+import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
 
 export class SignUpMuscleGroupController implements Controller {
   private readonly addMuscleGroup: AddMuscleGroup
@@ -19,9 +19,10 @@ export class SignUpMuscleGroupController implements Controller {
       }
 
       const { name } = httpRequest.body
-      await this.addMuscleGroup.add({
+      const muscleGroup = await this.addMuscleGroup.add({
         name
       })
+      return successRequest(muscleGroup)
     } catch (error) {
       console.error(error)
       return serverError()
