@@ -1,6 +1,6 @@
 import { SignUpExerciseSheetController } from './signup'
 import { AddExerciseSheet, AddExerciseSheetModel, ExerciseSheetModel } from './signup-protocols'
-import { MissingParamError } from '../../errors'
+import { MissingParamError, ServerError } from '../../errors'
 
 const makeAddExerciseSheet = (): AddExerciseSheet => {
   class AddExerciseSheetStub implements AddExerciseSheet {
@@ -151,5 +151,25 @@ describe('Signup Exercise Sheet Controller', () => {
       day: 'any_day',
       responsible: 'any_responsible'
     })
+  })
+
+  test('should return 500 if AddExerciseSheet throws', async () => {
+    const { sut, addExerciseSheetStub } = makeSut()
+    jest.spyOn(addExerciseSheetStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpRequest = {
+      body: {
+        user: 'valid_user',
+        exercise: 'any_exercise',
+        repetition: 'any_repetition',
+        amount: 'any_amount',
+        day: 'any_day',
+        responsible: 'any_responsible'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
