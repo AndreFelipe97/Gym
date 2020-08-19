@@ -38,4 +38,14 @@ describe('DbMuscleGroup Usecase', () => {
       name: 'any_name'
     })
   })
+
+  test('should throw if AddMuscleGroupRepository throws', async () => {
+    const { sut, addMuscleGroupRepositoryStub } = makeSut()
+    jest.spyOn(addMuscleGroupRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const muscleGroupData = {
+      name: 'any_name'
+    }
+    const promise = sut.add(muscleGroupData)
+    await expect(promise).rejects.toThrow()
+  })
 })
