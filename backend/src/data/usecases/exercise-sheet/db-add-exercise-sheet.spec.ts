@@ -67,4 +67,26 @@ describe('DbAddExerciseSheet Usecase', () => {
     const promise = sut.add(exerciseSheetData)
     await expect(promise).rejects.toThrow()
   })
+
+  test('should return an ExerciseSheet on success', async () => {
+    const { sut } = makeSut()
+    const exerciseSheetData = {
+      user: 'valid_user',
+      exercise: 'any_exercise',
+      repetition: 'any_repetition',
+      amount: 'any_amount',
+      day: 'any_day',
+      responsible: 'any_responsible'
+    }
+    const exercises = await sut.add(exerciseSheetData)
+    expect(exercises).toEqual({
+      id: 'valid_id',
+      user: 'valid_user',
+      exercise: 'any_exercise',
+      repetition: 'any_repetition',
+      amount: 'any_amount',
+      day: 'any_day',
+      responsible: 'any_responsible'
+    })
+  })
 })
