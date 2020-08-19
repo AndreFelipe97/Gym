@@ -48,4 +48,16 @@ describe('DbMuscleGroup Usecase', () => {
     const promise = sut.add(muscleGroupData)
     await expect(promise).rejects.toThrow()
   })
+
+  test('should return an Muscle Group on success', async () => {
+    const { sut } = makeSut()
+    const muscleGroupData = {
+      name: 'any_name'
+    }
+    const user = await sut.add(muscleGroupData)
+    expect(user).toEqual({
+      id: 'valid_id',
+      name: 'any_name'
+    })
+  })
 })
