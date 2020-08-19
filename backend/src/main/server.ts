@@ -1,5 +1,5 @@
-import app from './config/app'
+/* istanbul ignore next */ import app from './config/app'
 
-const port = 3333
+/* istanbul ignore next */ const port = 3333
 
-app.listen(port, () => console.log(`Server running at http://localhost:${port}`))
+/* istanbul ignore next */ app.listen(port, () => console.log(`Server running at http://localhost:${port}`))
