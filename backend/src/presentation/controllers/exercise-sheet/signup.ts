@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, AddExerciseSheet } from './signup-protocols'
-import { serverError, badRequest } from '../../helpers/http-helper'
+import { serverError, badRequest, successRequest } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors'
 
 export class SignUpExerciseSheetController implements Controller {
@@ -18,9 +18,10 @@ export class SignUpExerciseSheetController implements Controller {
         }
       }
       const { user, exercise, repetition, amount, day, responsible } = httpRequest.body
-      await this.addExerciseSheet.add({
+      const exerciseSheet = await this.addExerciseSheet.add({
         user, exercise, repetition, amount, day, responsible
       })
+      return successRequest(exerciseSheet)
     } catch (error) {
       return serverError()
     }
