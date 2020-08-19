@@ -36,4 +36,18 @@ describe('Signup Muscle Group Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
+
+  test('should call AddMuscleGroup with correct values', async () => {
+    const { sut, addMuscleGroupStub } = makeSut()
+    const addSpy = jest.spyOn(addMuscleGroupStub, 'add')
+    const httpRequest = {
+      body: {
+        name: 'any_name'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name'
+    })
+  })
 })
