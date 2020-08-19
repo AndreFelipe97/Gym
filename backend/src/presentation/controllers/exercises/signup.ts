@@ -1,5 +1,5 @@
 import { AddExercises, Controller, HttpRequest, HttpResponse } from './signup-protocols'
-import { serverError, badRequest } from '../../helpers/http-helper'
+import { serverError, badRequest, successRequest } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors'
 
 export class SignUpExercisesController implements Controller {
@@ -19,10 +19,11 @@ export class SignUpExercisesController implements Controller {
         }
       }
       const { name, muscleGroup } = httpRequest.body
-      await this.addExercises.add({
+      const muscleGroupResponse = await this.addExercises.add({
         name,
         muscleGroup
       })
+      return successRequest(muscleGroupResponse)
     } catch (error) {
       return serverError()
     }
