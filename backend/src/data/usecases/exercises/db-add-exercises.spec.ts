@@ -27,7 +27,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddExercises Usecase', () => {
-  test('should call AddGymRepository with correct values', async () => {
+  test('should call AddExercisesRepository with correct values', async () => {
     const { sut, addExercisesRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addExercisesRepositoryStub, 'add')
     const exercisesData = {
@@ -41,7 +41,7 @@ describe('DbAddExercises Usecase', () => {
     })
   })
 
-  test('should throw if AddGymRepository throws', async () => {
+  test('should throw if AddExercisesRepository throws', async () => {
     const { sut, addExercisesRepositoryStub } = makeSut()
     jest.spyOn(addExercisesRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const exercisesData = {
@@ -50,5 +50,19 @@ describe('DbAddExercises Usecase', () => {
     }
     const promise = sut.add(exercisesData)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('should return an Gym on success', async () => {
+    const { sut } = makeSut()
+    const exercisesData = {
+      name: 'valid_name',
+      muscleGroup: 'valid_muscle_group'
+    }
+    const exercises = await sut.add(exercisesData)
+    expect(exercises).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      muscleGroup: 'valid_muscle_group'
+    })
   })
 })
