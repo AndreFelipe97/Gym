@@ -40,4 +40,15 @@ describe('DbAddExercises Usecase', () => {
       muscleGroup: 'valid_muscle_group'
     })
   })
+
+  test('should throw if AddGymRepository throws', async () => {
+    const { sut, addExercisesRepositoryStub } = makeSut()
+    jest.spyOn(addExercisesRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const exercisesData = {
+      name: 'valid_name',
+      muscleGroup: 'valid_muscle_group'
+    }
+    const promise = sut.add(exercisesData)
+    await expect(promise).rejects.toThrow()
+  })
 })
