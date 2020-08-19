@@ -52,4 +52,19 @@ describe('DbAddExerciseSheet Usecase', () => {
       responsible: 'any_responsible'
     })
   })
+
+  test('should throw if AddExerciseSheetRepository throws', async () => {
+    const { sut, addExerciseSheetRepositoryStub } = makeSut()
+    jest.spyOn(addExerciseSheetRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const exerciseSheetData = {
+      user: 'valid_user',
+      exercise: 'any_exercise',
+      repetition: 'any_repetition',
+      amount: 'any_amount',
+      day: 'any_day',
+      responsible: 'any_responsible'
+    }
+    const promise = sut.add(exerciseSheetData)
+    await expect(promise).rejects.toThrow()
+  })
 })
