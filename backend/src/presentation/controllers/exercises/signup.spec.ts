@@ -1,5 +1,5 @@
 import { SignUpExercisesController } from './signup'
-import { MissingParamError } from '../../errors'
+import { MissingParamError, ServerError } from '../../errors'
 import { AddExercises, AddExercisesModel, ExercisesModel } from './signup-protocols'
 
 const makeAddExercises = (): AddExercises => {
@@ -67,5 +67,21 @@ describe('SignUp Exercises Controller', () => {
       name: 'any_name',
       muscleGroup: 'any_muscle_group'
     })
+  })
+
+  test('should return 500 if AddExercises throws', async () => {
+    const { sut, addExercisesStub } = makeSut()
+    jest.spyOn(addExercisesStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        muscleGroup: 'any_muscle_group'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
