@@ -1,8 +1,14 @@
-import { Controller, HttpRequest, HttpResponse } from '../../protocols'
+import { Controller, HttpRequest, HttpResponse, AddExerciseSheet } from './signup-protocols'
 import { serverError, badRequest } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors'
 
 export class SignUpExerciseSheetController implements Controller {
+  private readonly addExerciseSheet: AddExerciseSheet
+
+  constructor (addExerciseSheet: AddExerciseSheet) {
+    this.addExerciseSheet = addExerciseSheet
+  }
+
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = ['user', 'exercise', 'repetition', 'amount', 'day', 'responsible']
@@ -11,6 +17,10 @@ export class SignUpExerciseSheetController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
+      const { user, exercise, repetition, amount, day, responsible } = httpRequest.body
+      await this.addExerciseSheet.add({
+        user, exercise, repetition, amount, day, responsible
+      })
     } catch (error) {
       return serverError()
     }
