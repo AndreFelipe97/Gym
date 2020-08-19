@@ -17,6 +17,11 @@ export class SignUpMuscleGroupController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
+
+      const { name } = httpRequest.body
+      await this.addMuscleGroup.add({
+        name
+      })
     } catch (error) {
       console.error(error)
       return serverError()
