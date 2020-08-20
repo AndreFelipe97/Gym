@@ -1,4 +1,4 @@
-import { SignUpExercisesController } from '../../presentation/controllers/exercises/signup'
+import { SignUpExercisesController } from '../../presentation/controllers/exercises/controller-exercises'
 import { DbAddExercises } from '../../data/usecases/exercises/db-add-exercises'
 import { ExercisesMongoRepository } from '../../infra/db/mongodb/exercises-repository/exercises'
 
