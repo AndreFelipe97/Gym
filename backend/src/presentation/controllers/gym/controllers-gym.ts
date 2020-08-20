@@ -1,4 +1,4 @@
-import { AddGym, Controller, CnpjValidator, HttpResponse, HttpRequest } from './signup-protocols'
+import { AddGym, Controller, CnpjValidator, HttpResponse, HttpRequest } from './protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, successRequest, serverError } from '../../helpers/http-helper'
 
