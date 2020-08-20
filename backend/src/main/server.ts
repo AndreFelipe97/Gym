@@ -1,5 +1,7 @@
-/* istanbul ignore next */ import app from './config/app'
+/* istanbul ignore next */ import { MongoHelper } from '../infra/db/mongodb/helpers/mongo-helper'
+/* istanbul ignore next */ import env from './config/env'
 
-/* istanbul ignore next */ const port = 3333
-
-/* istanbul ignore next */ app.listen(port, () => console.log(`Server running at http://localhost:${port}`))
+/* istanbul ignore next */ MongoHelper.connect(env.mongoUrl).then(async () => {
+  const app = (await import('./config/app')).default
+  app.listen(env.port, () => console.log(`Server running at http://localhost:${env.port}`))
+}).catch(console.error)
