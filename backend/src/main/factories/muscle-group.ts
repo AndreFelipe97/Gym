@@ -1,4 +1,4 @@
-import { SignUpMuscleGroupController } from '../../presentation/controllers/muscle-group/signup'
+import { SignUpMuscleGroupController } from '../../presentation/controllers/muscle-group/controller-muscle-group'
 import { DbAddMuscleGroup } from '../../data/usecases/muscle-group/db-add-muscle-group'
 import { MuscleGroupMongoRepository } from '../../infra/db/mongodb/muscle-group-repository/muscle-group'
 
