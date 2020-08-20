@@ -1,4 +1,4 @@
-import { SignUpUserController } from '../../presentation/controllers/user/signup'
+import { SignUpUserController } from '../../presentation/controllers/user/controllers-user'
 import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
 import { DbAddUser } from '../../data/usecases/user/db-add-user'
 import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
