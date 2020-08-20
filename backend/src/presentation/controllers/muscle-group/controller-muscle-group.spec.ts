@@ -1,4 +1,4 @@
-import { SignUpMuscleGroupController } from './signup'
+import { SignUpMuscleGroupController } from './controller-muscle-group'
 import { MissingParamError, ServerError } from '../../errors'
 import { AddMuscleGroup, AddMuscleGroupModel } from '../../../domain/usecases/add-muscle-group'
 import { MuscleGroupModel } from '../../../domain/models/muscle-group-model'

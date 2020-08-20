@@ -1,6 +1,6 @@
-import { SignUpPhysicalAssessmentController } from './signup'
+import { SignUpPhysicalAssessmentController } from './controller-physical-assessment'
 import { MissingParamError, ServerError } from '../../errors'
-import { AddPhysicalAssessment, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './signup-protocols'
+import { AddPhysicalAssessment, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './protocols'
 
 const makeAddPhysicalAssessment = (): AddPhysicalAssessment => {
   class AddUserStub implements AddPhysicalAssessment {

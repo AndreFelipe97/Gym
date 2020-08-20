@@ -1,6 +1,6 @@
-import { SignUpExercisesController } from './signup'
+import { SignUpExercisesController } from './controller-exercises'
 import { MissingParamError, ServerError } from '../../errors'
-import { AddExercises, AddExercisesModel, ExercisesModel } from './signup-protocols'
+import { AddExercises, AddExercisesModel, ExercisesModel } from './protocols'
 
 const makeAddExercises = (): AddExercises => {
   class AddExercisesStub implements AddExercises {

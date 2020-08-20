@@ -1,5 +1,5 @@
-import { SignUpExerciseSheetController } from './signup'
-import { AddExerciseSheet, AddExerciseSheetModel, ExerciseSheetModel } from './signup-protocols'
+import { SignUpExerciseSheetController } from './controllers-exercise-sheet'
+import { AddExerciseSheet, AddExerciseSheetModel, ExerciseSheetModel } from './protocols'
 import { MissingParamError, ServerError } from '../../errors'
 
 const makeAddExerciseSheet = (): AddExerciseSheet => {
