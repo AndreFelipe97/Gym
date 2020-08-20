@@ -1,4 +1,4 @@
-import { AddPhysicalAssessment, Controller, HttpRequest, HttpResponse } from './signup-protocols'
+import { AddPhysicalAssessment, Controller, HttpRequest, HttpResponse } from './protocols'
 import { MissingParamError } from '../../errors'
 import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
 
