@@ -1,4 +1,4 @@
-import { Controller, HttpRequest, HttpResponse, AddExerciseSheet } from './signup-protocols'
+import { Controller, HttpRequest, HttpResponse, AddExerciseSheet } from './protocols'
 import { serverError, badRequest, successRequest } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors'
 
