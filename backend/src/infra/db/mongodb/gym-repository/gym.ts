@@ -5,7 +5,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class GymMongoRepository implements AddGymRepository {
   async add (gymData: AddGymModel): Promise<GymModel> {
-    const gymCollection = MongoHelper.get_collection('gyms')
+    const gymCollection = await MongoHelper.get_collection('gyms')
     const result = await gymCollection.insertOne(gymData)
     const gym = result.ops[0]
     return MongoHelper.map(gym)

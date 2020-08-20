@@ -5,7 +5,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class PhysicalAssessmentMongoRepository implements AddPhysicalAssessmentRepository {
   async add (physicalAssessmentData: AddPhysicalAssessmentModel): Promise<PhysicalAssessmentModel> {
-    const physicalAssessmentCollection = MongoHelper.get_collection('physicalAssessments')
+    const physicalAssessmentCollection = await MongoHelper.get_collection('physicalAssessments')
     const result = await physicalAssessmentCollection.insertOne(physicalAssessmentData)
     const physicalAssessment = result.ops[0]
     return MongoHelper.map(physicalAssessment)
