@@ -21,7 +21,7 @@ describe('Gym routes', () => {
       .send({
         name: 'valid_name',
         phone: 'valid_phone',
-        cnpj: 'valid_cnpj',
+        cnpj: '17717557000140',
         zipCode: 'valid_zip_code',
         street: 'valid_street',
         number: 'valid_number',
