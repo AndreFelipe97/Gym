@@ -8,8 +8,8 @@ describe('Muscle Group routes', () => {
   })
 
   beforeEach(async () => {
-    const gymCollection = MongoHelper.get_collection('gyms')
-    await gymCollection.deleteMany({})
+    const muscleGroupsCollection = await MongoHelper.get_collection('muscleGroups')
+    await muscleGroupsCollection.deleteMany({})
   })
 
   afterAll(async () => {

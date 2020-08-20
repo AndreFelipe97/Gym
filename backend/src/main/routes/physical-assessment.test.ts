@@ -8,8 +8,8 @@ describe('Physical Assessment routes', () => {
   })
 
   beforeEach(async () => {
-    const gymCollection = MongoHelper.get_collection('gyms')
-    await gymCollection.deleteMany({})
+    const physicalAssessmentsCollection = await MongoHelper.get_collection('physicalAssessments')
+    await physicalAssessmentsCollection.deleteMany({})
   })
 
   afterAll(async () => {

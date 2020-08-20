@@ -8,7 +8,7 @@ describe('Gym routes', () => {
   })
 
   beforeEach(async () => {
-    const gymCollection = MongoHelper.get_collection('gyms')
+    const gymCollection = await MongoHelper.get_collection('gyms')
     await gymCollection.deleteMany({})
   })
 
