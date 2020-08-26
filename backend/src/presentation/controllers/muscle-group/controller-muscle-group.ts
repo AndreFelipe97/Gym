@@ -2,7 +2,7 @@ import { AddMuscleGroup, Controller, HttpRequest, HttpResponse } from './protoco
 import { MissingParamError } from '../../errors'
 import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
 
-export class SignUpMuscleGroupController implements Controller {
+export class MuscleGroupController implements Controller {
   private readonly addMuscleGroup: AddMuscleGroup
   constructor (addMuscleGroup: AddMuscleGroup) {
     this.addMuscleGroup = addMuscleGroup

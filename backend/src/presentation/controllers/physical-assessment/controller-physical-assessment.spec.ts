@@ -1,4 +1,4 @@
-import { SignUpPhysicalAssessmentController } from './controller-physical-assessment'
+import { PhysicalAssessmentController } from './controller-physical-assessment'
 import { MissingParamError, ServerError } from '../../errors'
 import { AddPhysicalAssessment, AddPhysicalAssessmentModel, PhysicalAssessmentModel } from './protocols'
 
@@ -32,11 +32,11 @@ const makeAddPhysicalAssessment = (): AddPhysicalAssessment => {
 
 interface SutTypes {
   addPhysicalAssessmentStub: AddPhysicalAssessment
-  sut: SignUpPhysicalAssessmentController
+  sut: PhysicalAssessmentController
 }
 const makeSut = (): SutTypes => {
   const addPhysicalAssessmentStub = makeAddPhysicalAssessment()
-  const sut = new SignUpPhysicalAssessmentController(addPhysicalAssessmentStub)
+  const sut = new PhysicalAssessmentController(addPhysicalAssessmentStub)
 
   return { sut, addPhysicalAssessmentStub }
 }

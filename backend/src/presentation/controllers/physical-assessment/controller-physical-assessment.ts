@@ -2,7 +2,7 @@ import { AddPhysicalAssessment, Controller, HttpRequest, HttpResponse } from './
 import { MissingParamError } from '../../errors'
 import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
 
-export class SignUpPhysicalAssessmentController implements Controller {
+export class PhysicalAssessmentController implements Controller {
   private readonly addPhysicalAssessment: AddPhysicalAssessment
 
   constructor (addPhysicalAssessment: AddPhysicalAssessment) {

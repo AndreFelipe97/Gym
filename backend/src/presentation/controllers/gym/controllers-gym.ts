@@ -2,7 +2,7 @@ import { AddGym, Controller, CnpjValidator, HttpResponse, HttpRequest } from './
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, successRequest, serverError } from '../../helpers/http-helper'
 
-export class SignUpController implements Controller {
+export class GymController implements Controller {
   private readonly cnpjValidator: CnpjValidator
   private readonly addGym: AddGym
 

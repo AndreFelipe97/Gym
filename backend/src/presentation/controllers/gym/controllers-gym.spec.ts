@@ -1,4 +1,4 @@
-import { SignUpController } from './controllers-gym'
+import { GymController } from './controllers-gym'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { AddGym, AddGymModel, CnpjValidator, GymModel } from './protocols'
 
@@ -34,7 +34,7 @@ const makeAddGym = (): AddGym => {
 }
 
 interface SutTypes {
-  sut: SignUpController
+  sut: GymController
   cnpjValidatorStub: CnpjValidator
   addGymStub: AddGym
 }
@@ -42,7 +42,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const cnpjValidatorStub = makeCnpjValidator()
   const addGymStub = makeAddGym()
-  const sut = new SignUpController(cnpjValidatorStub, addGymStub)
+  const sut = new GymController(cnpjValidatorStub, addGymStub)
 
   return {
     sut,

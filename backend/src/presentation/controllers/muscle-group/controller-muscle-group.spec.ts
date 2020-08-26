@@ -1,4 +1,4 @@
-import { SignUpMuscleGroupController } from './controller-muscle-group'
+import { MuscleGroupController } from './controller-muscle-group'
 import { MissingParamError, ServerError } from '../../errors'
 import { AddMuscleGroup, AddMuscleGroupModel } from '../../../domain/usecases/add-muscle-group'
 import { MuscleGroupModel } from '../../../domain/models/muscle-group-model'
@@ -16,13 +16,13 @@ const makeMuscleGroup = (): AddMuscleGroup => {
   return new AddMuscleGroupStub()
 }
 interface SutTypes {
-  sut: SignUpMuscleGroupController
+  sut: MuscleGroupController
   addMuscleGroupStub: AddMuscleGroup
 }
 
 const makeSut = (): SutTypes => {
   const addMuscleGroupStub = makeMuscleGroup()
-  const sut = new SignUpMuscleGroupController(addMuscleGroupStub)
+  const sut = new MuscleGroupController(addMuscleGroupStub)
   return { sut, addMuscleGroupStub }
 }
 

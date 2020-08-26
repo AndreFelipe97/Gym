@@ -1,4 +1,4 @@
-import { SignUpUserController } from './controllers-user'
+import { UserController } from './controllers-user'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { EmailValidator } from '../../protocols/email-validator'
 import { AddUser, AddUserModel, UserModel } from './protocols'
@@ -32,7 +32,7 @@ const makeAddUser = (): AddUser => {
 }
 
 interface SutTypes {
-  sut: SignUpUserController
+  sut: UserController
   emailValidatorStub: EmailValidator
   addUserStub: AddUser
 }
@@ -40,7 +40,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const addUserStub = makeAddUser()
-  const sut = new SignUpUserController(emailValidatorStub, addUserStub)
+  const sut = new UserController(emailValidatorStub, addUserStub)
   return {
     sut,
     emailValidatorStub,

@@ -1,4 +1,4 @@
-import { SignUpExercisesController } from './controller-exercises'
+import { ExercisesController } from './controller-exercises'
 import { MissingParamError, ServerError } from '../../errors'
 import { AddExercises, AddExercisesModel, ExercisesModel } from './protocols'
 
@@ -17,13 +17,13 @@ const makeAddExercises = (): AddExercises => {
 }
 
 interface SutTypes {
-  sut: SignUpExercisesController
+  sut: ExercisesController
   addExercisesStub: AddExercises
 }
 
 const makeSut = (): SutTypes => {
   const addExercisesStub = makeAddExercises()
-  const sut = new SignUpExercisesController(addExercisesStub)
+  const sut = new ExercisesController(addExercisesStub)
 
   return { sut, addExercisesStub }
 }

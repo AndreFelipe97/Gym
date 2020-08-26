@@ -2,7 +2,7 @@ import { Controller, HttpRequest, HttpResponse, AddExerciseSheet } from './proto
 import { serverError, badRequest, successRequest } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors'
 
-export class SignUpExerciseSheetController implements Controller {
+export class ExerciseSheetController implements Controller {
   private readonly addExerciseSheet: AddExerciseSheet
 
   constructor (addExerciseSheet: AddExerciseSheet) {
