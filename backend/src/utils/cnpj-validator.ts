@@ -31,8 +31,6 @@ export class CnpjValidatorAdapter implements CnpjValidator {
     tamanho = cnpj.length - 2
     numeros = cnpj.substring(0, tamanho)
     const digitos = cnpj.substring(tamanho)
-    console.log(digitos)
-    console.log(digitos.charAt(0))
     soma = 0
     pos = tamanho - 7
     for (let i = tamanho; i >= 1; i--) {
