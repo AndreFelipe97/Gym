@@ -24,8 +24,7 @@ export class MuscleGroupController implements Controller {
       })
       return successRequest(muscleGroup)
     } catch (error) {
-      console.error(error)
-      return serverError()
+      return serverError(error)
     }
   }
 }

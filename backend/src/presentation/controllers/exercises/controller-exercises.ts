@@ -25,7 +25,7 @@ export class ExercisesController implements Controller {
       })
       return successRequest(muscleGroupResponse)
     } catch (error) {
-      return serverError()
+      return serverError(error)
     }
   }
 }

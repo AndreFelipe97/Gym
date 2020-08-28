@@ -23,7 +23,7 @@ export class ExerciseSheetController implements Controller {
       })
       return successRequest(exerciseSheet)
     } catch (error) {
-      return serverError()
+      return serverError(error)
     }
   }
 }

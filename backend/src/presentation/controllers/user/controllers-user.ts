@@ -36,7 +36,7 @@ export class UserController implements Controller {
       })
       return successRequest(user)
     } catch (error) {
-      return serverError()
+      return serverError(error)
     }
   }
 }

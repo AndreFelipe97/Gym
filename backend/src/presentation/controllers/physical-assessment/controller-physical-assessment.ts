@@ -44,7 +44,7 @@ export class PhysicalAssessmentController implements Controller {
       })
       return successRequest(physicalAssessment)
     } catch (error) {
-      return serverError()
+      return serverError(error)
     }
   }
 }
